@@ -23,7 +23,9 @@ cd keyscore
 > 4. Connect your device
 > 
 > 4. Run the command: "idf.py build flash monitor"
-> 
+```bash
+idf.py build flash monitor
+```
 > 5. Done
 
 </details>
@@ -43,7 +45,7 @@ cd keyscore
 > 3. Connect your device
 > 
 > 4. Click on the button "ESP-IDF: Build, Flash and Monitor"
-> 
+>
 > 5. Done
 </details>
 
