@@ -15,7 +15,7 @@
 
 > 1. Download or clone the repository
 ```bash
-git clone https://github.com/yourusername/keyscore.git 
+git clone https://github.com/datafy98-dev/KeysCore.git 
 cd keyscore
 ```
 > 3. Make sure you have ESP-IDF installed
@@ -37,7 +37,7 @@ idf.py build flash monitor
 
 > 1. Download or clone the repository
 ```bash
-git clone https://github.com/yourusername/keyscore.git 
+git clone https://github.com/datafy98-dev/KeysCore.git 
 cd keyscore
 ``` 
 > 2. Make sure you have ESP-IDF installed
