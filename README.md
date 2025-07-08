@@ -1,1 +1,44 @@
-Hello World!
+# Hello World!
+
+### KeysCore (KeysMOS) - This is the operating system for the KeysCore synthesizer.
+
+## How to use?
+> Maybe later
+
+## How to build?
+> [!NOTE]
+> Currently only ESP32 S3 is supported
+### - Option 1 (using console)
+> 1. Download or clone the repository
+```bash
+git clone https://github.com/yourusername/keyscore.git 
+cd keyscore
+```
+> 3. Make sure you have ESP-IDF installed
+> 
+> 4. Connect your device
+> 
+> 4. Run the command: "idf.py build flash monitor"
+> 
+> 5. Done
+
+### - Option 2 (Using "Code - OSS" or "Visual Studio Code")
+> 1. Download or clone the repository
+```bash
+git clone https://github.com/yourusername/keyscore.git 
+cd keyscore
+``` 
+> 2. Make sure you have ESP-IDF installed
+> 
+> 3. Connect your device
+> 
+> 4. Click on the button "ESP-IDF: Build, Flash and Monitor"
+> 
+> 5. Done
+
+### What's currently in development plans?
+> - Potentiometer support
+>
+> - Multiple menu screens
+>
+> - Sound output and reception on PC client
