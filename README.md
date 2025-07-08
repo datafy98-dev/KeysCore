@@ -8,7 +8,11 @@
 ## How to build?
 > [!NOTE]
 > Currently only ESP32 S3 is supported
-### - Option 1 (using console)
+
+<details>
+
+<summary>- Option 1 (using console)</summary>
+
 > 1. Download or clone the repository
 ```bash
 git clone https://github.com/yourusername/keyscore.git 
@@ -22,7 +26,13 @@ cd keyscore
 > 
 > 5. Done
 
-### - Option 2 (Using "Code - OSS" or "Visual Studio Code")
+</details>
+
+<details>
+
+
+<summary>- Option 2 (Using "Code - OSS" or "Visual Studio Code")</summary>
+
 > 1. Download or clone the repository
 ```bash
 git clone https://github.com/yourusername/keyscore.git 
@@ -35,6 +45,7 @@ cd keyscore
 > 4. Click on the button "ESP-IDF: Build, Flash and Monitor"
 > 
 > 5. Done
+</details>
 
 ### What's currently in development plans?
 > - Potentiometer support
