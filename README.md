@@ -1,6 +1,6 @@
 # Hello World!
 
-### KeysCore (KeysMOS) - This is the operating system for the KeysCore synthesizer.
+### *KeysCore (KeysMOS)* - This is the operating system for the *KeysCore* synthesizer.
 
 ## How to use?
 > Maybe later
