@@ -42,7 +42,7 @@ esp_err_t st7735_init(st7735_t *lcd) {
     };
     
     spi_device_interface_config_t devcfg = {
-        .clock_speed_hz = 40 * 1000 * 1000, // Увеличена скорость до 40MHz
+        .clock_speed_hz = 40 * 1000 * 1000, // 40MHz
         .mode = 0,
         .spics_io_num = LCD_CS_PIN,
         .queue_size = 7,
@@ -67,14 +67,13 @@ esp_err_t st7735_init(st7735_t *lcd) {
     gpio_set_level(lcd->rst_pin, 1);
     vTaskDelay(pdMS_TO_TICKS(100));
     
-    // Инициализация ST7735 (остается как было)
+    // Инициализация
     st7735_write_command(lcd, ST7735_SWRESET);
     vTaskDelay(pdMS_TO_TICKS(150));
     
     st7735_write_command(lcd, ST7735_SLPOUT);
     vTaskDelay(pdMS_TO_TICKS(500));
     
-    // Frame rate control
     st7735_write_command(lcd, ST7735_FRMCTR1);
     st7735_write_data(lcd, 0x01);
     st7735_write_data(lcd, 0x2C);
@@ -92,12 +91,10 @@ esp_err_t st7735_init(st7735_t *lcd) {
     st7735_write_data(lcd, 0x01);
     st7735_write_data(lcd, 0x2C);
     st7735_write_data(lcd, 0x2D);
-    
-    // Column inversion control
+
     st7735_write_command(lcd, ST7735_INVCTR);
     st7735_write_data(lcd, 0x07);
     
-    // Power control
     st7735_write_command(lcd, ST7735_PWCTR1);
     st7735_write_data(lcd, 0xA2);
     st7735_write_data(lcd, 0x02);
@@ -230,11 +227,9 @@ void st7735_set_addr_window(st7735_t *lcd, uint8_t x0, uint8_t y0, uint8_t x1, u
     st7735_write_command(lcd, ST7735_RAMWR);
 }
 
-// Оптимизированная функция заливки экрана
 void st7735_fill_screen_fast(st7735_t *lcd, uint16_t color) {
     st7735_set_addr_window(lcd, 0, 0, ST7735_WIDTH - 1, ST7735_HEIGHT - 1);
     
-    // Подготавливаем буфер с цветом
     for (int i = 0; i < ST7735_WIDTH * 2; i += 2) {
         spi_buffer[i] = color >> 8;
         spi_buffer[i + 1] = color & 0xFF;
@@ -242,7 +237,6 @@ void st7735_fill_screen_fast(st7735_t *lcd, uint16_t color) {
     
     gpio_set_level(lcd->dc_pin, 1);
     
-    // Отправляем строки
     for (int y = 0; y < ST7735_HEIGHT; y++) {
         st7735_write_data_bulk(lcd, spi_buffer, ST7735_WIDTH * 2);
     }
@@ -259,7 +253,6 @@ void st7735_draw_pixel(st7735_t *lcd, uint8_t x, uint8_t y, uint16_t color) {
     st7735_write_data_16(lcd, color);
 }
 
-// Новая функция: рисование линии (алгоритм Брезенхема)
 void st7735_draw_line(st7735_t *lcd, int x0, int y0, int x1, int y1, uint16_t color) {
     int dx = abs(x1 - x0);
     int dy = abs(y1 - y0);
@@ -284,7 +277,6 @@ void st7735_draw_line(st7735_t *lcd, int x0, int y0, int x1, int y1, uint16_t co
     }
 }
 
-// Новая функция: рисование прямоугольника
 void st7735_draw_rect(st7735_t *lcd, int x, int y, int w, int h, uint16_t color) {
     st7735_draw_line(lcd, x, y, x + w - 1, y, color);
     st7735_draw_line(lcd, x + w - 1, y, x + w - 1, y + h - 1, color);
@@ -292,7 +284,6 @@ void st7735_draw_rect(st7735_t *lcd, int x, int y, int w, int h, uint16_t color)
     st7735_draw_line(lcd, x, y + h - 1, x, y, color);
 }
 
-// Новая функция: заливка прямоугольника
 void st7735_fill_rect(st7735_t *lcd, int x, int y, int w, int h, uint16_t color) {
     if (x >= ST7735_WIDTH || y >= ST7735_HEIGHT) return;
     if (x + w > ST7735_WIDTH) w = ST7735_WIDTH - x;
@@ -300,7 +291,6 @@ void st7735_fill_rect(st7735_t *lcd, int x, int y, int w, int h, uint16_t color)
     
     st7735_set_addr_window(lcd, x, y, x + w - 1, y + h - 1);
     
-    // Подготавливаем буфер строки
     for (int i = 0; i < w * 2; i += 2) {
         spi_buffer[i] = color >> 8;
         spi_buffer[i + 1] = color & 0xFF;
@@ -308,13 +298,11 @@ void st7735_fill_rect(st7735_t *lcd, int x, int y, int w, int h, uint16_t color)
     
     gpio_set_level(lcd->dc_pin, 1);
     
-    // Отправляем строки
     for (int row = 0; row < h; row++) {
         st7735_write_data_bulk(lcd, spi_buffer, w * 2);
     }
 }
 
-// Новая функция: рисование окружности
 void st7735_draw_circle(st7735_t *lcd, int x0, int y0, int r, uint16_t color) {
     int x = r;
     int y = 0;
@@ -342,7 +330,6 @@ void st7735_draw_circle(st7735_t *lcd, int x0, int y0, int r, uint16_t color) {
     }
 }
 
-// Новая функция: заливка окружности
 void st7735_fill_circle(st7735_t *lcd, int x0, int y0, int r, uint16_t color) {
     for (int y = -r; y <= r; y++) {
         for (int x = -r; x <= r; x++) {
@@ -353,12 +340,10 @@ void st7735_fill_circle(st7735_t *lcd, int x0, int y0, int r, uint16_t color) {
     }
 }
 
-// Функция выбора шрифта
 void st7735_set_font(st7735_t *lcd, font_type_t font) {
     lcd->current_font = font;
 }
 
-// Получение указателя на шрифт
 const uint8_t* get_font_data(font_type_t font, char c) {
     if (c < 32 || c > 126) return NULL;
     
@@ -373,7 +358,6 @@ const uint8_t* get_font_data(font_type_t font, char c) {
     }
 }
 
-// Оптимизированная функция рисования символа
 void st7735_draw_char_with_font(st7735_t *lcd, uint8_t x, uint8_t y, char c, uint16_t color, uint16_t bg_color, font_type_t font) {
     if (c < 32 || c > 126) return;
     if (x + 8 > ST7735_WIDTH || y + 8 > ST7735_HEIGHT) return;
@@ -381,10 +365,8 @@ void st7735_draw_char_with_font(st7735_t *lcd, uint8_t x, uint8_t y, char c, uin
     const uint8_t *char_data = get_font_data(font, c);
     if (!char_data) return;
     
-    // Устанавливаем окно для символа
     st7735_set_addr_window(lcd, x, y, x + 7, y + 7);
     
-    // Подготавливаем данные символа
     uint16_t pixel_data[64]; // 8x8 пикселей
     int idx = 0;
     
@@ -412,7 +394,6 @@ void st7735_draw_char(st7735_t *lcd, uint8_t x, uint8_t y, char c, uint16_t colo
     st7735_draw_char_with_font(lcd, x, y, c, color, bg_color, lcd->current_font);
 }
 
-// Оптимизированная функция рисования строки
 void st7735_draw_string_with_font(st7735_t *lcd, uint8_t x, uint8_t y, const char *str, uint16_t color, uint16_t bg_color, font_type_t font) {
     uint8_t cur_x = x;
     uint8_t cur_y = y;
@@ -424,7 +405,7 @@ void st7735_draw_string_with_font(st7735_t *lcd, uint8_t x, uint8_t y, const cha
         } else if (*str == '\r') {
             cur_x = x;
         } else if (*str == '\t') {
-            cur_x = ((cur_x / 32) + 1) * 32; // Табуляция на 4 символа
+            cur_x = ((cur_x / 32) + 1) * 32;
         } else {
             if (cur_x + 8 > ST7735_WIDTH) {
                 cur_x = x;
@@ -480,7 +461,7 @@ void st7735_draw_mono_image(st7735_t *lcd, uint8_t x, uint8_t y, const uint8_t *
 }
 
 
-// Утилита: конвертация RGB в RGB565
+// RGB в RGB565
 uint16_t st7735_color565(uint8_t r, uint8_t g, uint8_t b) {
     return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
 }

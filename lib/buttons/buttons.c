@@ -36,7 +36,7 @@ void button_process(button_t* btn) {
         current_state = !current_state;
     }
     
-    uint32_t now = esp_timer_get_time() / 1000; // миллисекунды
+    uint32_t now = esp_timer_get_time() / 1000;
     
     // Обработка нажатия
     if (current_state && !btn->last_state) {

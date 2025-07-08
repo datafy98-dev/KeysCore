@@ -8,12 +8,10 @@
 
 static const char *TAG = "MAIN";
 static st7735_t *g_lcd = NULL;
-static int g_numb = 1; // Правильное объявление переменной
+static int g_numb = 1;
 
-// Предварительное объявление функции
 void draw_main_menu(const char *menu_names[], size_t menu_size);
 
-// Обработчик кнопки UP (увеличивает номер пункта меню)
 void buttonUP_handler(button_event_t event) {
     if (g_lcd == NULL) return;
 
@@ -29,7 +27,6 @@ void buttonUP_handler(button_event_t event) {
     }
 }
 
-// Обработчик кнопки DOWN (уменьшает номер пункта меню)
 void buttonDOWN_handler(button_event_t event) {
     if (g_lcd == NULL) return;
 
@@ -45,7 +42,6 @@ void buttonDOWN_handler(button_event_t event) {
     }
 }
 
-// Обработчик кнопки SELECT (подтверждение выбора)
 void buttonSELECT_handler(button_event_t event) {
     if (g_lcd == NULL) return;
 
@@ -63,8 +59,6 @@ void buttonSELECT_handler(button_event_t event) {
             break;
     }
 }
-
-// Функция отрисовки меню
 
 void draw_main_menu(const char *menu_names[], size_t menu_size) {
     if (g_lcd == NULL) return;
@@ -86,7 +80,6 @@ void draw_main_menu(const char *menu_names[], size_t menu_size) {
     }
 }
 
-// Основная функция
 void app_main(void) {
     ESP_LOGI(TAG, "Starting ST7735");
 
@@ -106,7 +99,6 @@ void app_main(void) {
     st7735_fill_screen(&lcd, COLOR_BLACK);
     draw_main_menu(menu_names, menu_size);
 
-    // Инициализация кнопок
     button_init(&my_button_up, GPIO_NUM_1, true, buttonUP_handler);     // UP
     button_init(&my_button_down, GPIO_NUM_42, true, buttonDOWN_handler); // DOWN
     button_init(&my_button_select, GPIO_NUM_2, true, buttonSELECT_handler); // SELECT

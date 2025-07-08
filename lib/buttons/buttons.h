@@ -20,7 +20,6 @@ typedef struct {
     uint32_t long_press_ms;
     button_callback_t callback;
     
-    // Внутренние переменные
     bool last_state;
     uint32_t press_time;
     bool long_press_triggered;
