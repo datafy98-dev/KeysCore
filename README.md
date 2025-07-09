@@ -2,6 +2,19 @@
 
 ### *KeysCore (KeysMOS)* - This is the operating system for the *KeysCore* synthesizer.
 
+## Device specifications
+> ESP32 S3
+> [!WARNING]
+> Recommended version: N16R8
+>
+> Display 160x128 pixels
+>
+> 5 potanceometers
+>
+> Keyboard connector (MIDI/UART)
+>
+> Some GPIO inputs and outputs, including UART0
+
 ## How to use?
 > Maybe later
 
