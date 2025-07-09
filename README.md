@@ -1,12 +1,24 @@
 # Hello World!
 
-### *KeysCore (KeysMOS)* - This is the operating system for the *KeysCore* synthesizer.
+### *KeysCore* - This is a portable synthesizer with a detachable keyboard.
+### *KeysMOS* - This is the operating system for the *KeysCore* synthesizer.
 
 ## Device specifications
-> ESP32 S3
+> ***ESP32 S3***
+
+> Processor: two cores 32-bit Xtensa LX7, 240 MHz;
+> 
+> WLAN protocol: b/g/n;
+> 
+> Wi-Fi frequency range: 2.4 GHz;
+> 
+> BLE support: Bluetooth 5.0/Bluetooth mesh;
+> 
+> Memory: 384 KB ROM / 512 KB SRAM / 16 KB SRAM RTC;
+
 > [!WARNING]
-> Recommended version: N16R8
->
+> Recommended version: ***N16R8*** (Add 16MB Flash memory and 8MB PSRAM)
+
 > Display 160x128 pixels
 >
 > 5 potanceometers
